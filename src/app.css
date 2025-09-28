@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 body {
 	font-family: 'DM Sans Variable', sans-serif;
@@ -10,7 +11,6 @@ body {
   @apply grid bg-gray-950 bg-repeat text-gray-50 bg-[url('/assets/noise-texture.svg')];
   font-family: 'DM Sans Variable', sans-serif;
 } */
-
 
 .glass-container {
 	position: relative;

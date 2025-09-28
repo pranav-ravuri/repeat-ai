@@ -1,8 +1,9 @@
 <script lang="ts">
-	import IconCycle from '$lib/assets/IconCycle.svelte';
-	import IconGear from '$lib/assets/IconGear.svelte';
+	import IconCycle from './icons/IconCycle.svelte';
+	import IconGear from './icons/IconGear.svelte';
 	import Bounded from '$lib/components/Bounded.svelte';
 	import ButtonLink from '$lib/components/ButtonLink.svelte';
+	import SpanHeading from './SpanHeading.svelte';
 	import type { Content } from '@prismicio/client';
 	import {
 		PrismicImage,
@@ -12,15 +13,14 @@
 	} from '@prismicio/svelte';
 	import clsx from 'clsx';
 
-	import type { SvelteComponent } from 'svelte';
-
 	type Props = SliceComponentProps<Content.ShowcaseSlice>;
 
 	const { slice }: Props = $props();
 	const icons = {
 		gear: IconGear,
 		cycle: IconCycle
-	};
+	} as const;
+	const Icon = icons[slice.primary.icon as keyof typeof icons] ?? null;
 </script>
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
@@ -30,7 +30,7 @@
 
 	{#if slice.primary.heading}
 		<h2 class="text-center text-5xl font-medium text-balance md:text-7xl">
-			<PrismicText field={slice.primary.heading} />
+			<PrismicRichText field={slice.primary.heading} components={{ heading2: SpanHeading }} />
 		</h2>
 	{/if}
 
@@ -39,13 +39,9 @@
 	>
 		<div class="grid-background"></div>
 		<div>
-			{#if slice.primary.icon === 'gear'}
+			{#if Icon}
 				<div class="w-fit rounded-lg bg-violet-800 p-4 text-3xl">
-					<IconGear />
-				</div>
-			{:else if slice.primary.icon === 'cycle'}
-				<div class="w-fit rounded-lg bg-violet-800 p-4 text-3xl">
-					<IconCycle />
+					<Icon />
 				</div>
 			{/if}
 

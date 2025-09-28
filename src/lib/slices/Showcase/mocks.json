@@ -137,7 +137,7 @@
 			"icon": {
 				"__TYPE__": "FieldContent",
 				"type": "Select",
-				"value": "cycle"
+				"value": "gear"
 			},
 			"subheading": {
 				"__TYPE__": "StructuredTextContent",
@@ -153,11 +153,11 @@
 				]
 			},
 			"button_link": {
-				"key": "deb95af4-bae6-45cc-b350-2a15757c1ba2",
 				"__TYPE__": "LinkContent",
+				"key": "deb95af4-bae6-45cc-b350-2a15757c1ba2",
 				"value": {
-					"__TYPE__": "ExternalLink",
-					"url": "https://slicemachine.dev",
+					"__TYPE__": "AnyLink",
+					"kind": "any",
 					"text": "not"
 				}
 			},
