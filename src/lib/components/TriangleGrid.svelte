@@ -5,100 +5,103 @@
 	const grid = [14, 30];
 
 	onMount(() => {
-		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
+		const ctx = gsap.context(() => {
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
 
-		if (prefersReducedMotion) {
-			gsap.set('#triangle-grid', {
-				opacity: 1
-			});
+			if (prefersReducedMotion) {
+				gsap.set('#triangle-grid', {
+					opacity: 1
+				});
+
+				gsap.set('.triangle-grid-item', {
+					opacity: 0.2,
+					scale: 1
+				});
+
+				return;
+			}
 
 			gsap.set('.triangle-grid-item', {
-				opacity: 0.2,
-				scale: 1
+				opacity: 0,
+				transformOrigin: 'center',
+				color: '#fff'
 			});
 
-			return;
-		}
+			gsap.set('#triangle-grid', { opacity: 1 });
 
-		gsap.set('.triangle-grid-item', {
-			opacity: 0,
-			transformOrigin: 'center',
-			color: '#fff'
-		});
+			const tl = gsap.timeline();
 
-		gsap.set('#triangle-grid', { opacity: 1 });
-
-		const tl = gsap.timeline();
-
-		// Entrance Animation
-		tl.to('.triangle-grid-item', {
-			keyframes: [
-				{
-					opacity: 0,
-					duration: 0
-				},
-				{
-					opacity: 0.4,
-					rotate: '+=180',
-					color: '#A78BFA',
-					scale: 3,
-					duration: 0.6,
-					stagger: {
-						amount: 2,
-						grid: grid,
-						from: 'center'
+			// Entrance Animation
+			tl.to('.triangle-grid-item', {
+				keyframes: [
+					{
+						opacity: 0,
+						duration: 0
+					},
+					{
+						opacity: 0.4,
+						rotate: '+=180',
+						color: '#A78BFA',
+						scale: 3,
+						duration: 0.6,
+						stagger: {
+							amount: 2,
+							grid: grid,
+							from: 'center'
+						}
+					},
+					{
+						opacity: 0.2,
+						rotate: '+=180',
+						color: '#fff',
+						scale: 1,
+						delay: -2,
+						duration: 0.6,
+						stagger: {
+							amount: 3,
+							grid: grid,
+							from: 'center'
+						}
 					}
-				},
-				{
-					opacity: 0.2,
-					rotate: '+=180',
-					color: '#fff',
-					scale: 1,
-					delay: -2,
-					duration: 0.6,
-					stagger: {
-						amount: 3,
-						grid: grid,
-						from: 'center'
-					}
-				}
-			]
-		});
+				]
+			});
 
-		// Loop Animation
+			// Loop Animation
 
-		tl.to('.triangle-grid-item', {
-			delay: 12,
-			repeat: -1,
-			repeatDelay: 12,
+			tl.to('.triangle-grid-item', {
+				delay: 12,
+				repeat: -1,
+				repeatDelay: 12,
 
-			keyframes: [
-				{
-					opacity: 0.4,
-					rotate: '+=180',
-					color: '#A78BFA',
-					scale: 3,
-					duration: 0.6,
-					stagger: {
-						amount: 2,
-						grid: grid,
-						from: 'center'
+				keyframes: [
+					{
+						opacity: 0.4,
+						rotate: '+=180',
+						color: '#A78BFA',
+						scale: 3,
+						duration: 0.6,
+						stagger: {
+							amount: 2,
+							grid: grid,
+							from: 'center'
+						}
+					},
+					{
+						opacity: 0.2,
+						rotate: '+=180',
+						color: '#fff',
+						scale: 1,
+						delay: -2,
+						duration: 0.6,
+						stagger: {
+							amount: 3,
+							grid: grid,
+							from: 'center'
+						}
 					}
-				},
-				{
-					opacity: 0.2,
-					rotate: '+=180',
-					color: '#fff',
-					scale: 1,
-					delay: -2,
-					duration: 0.6,
-					stagger: {
-						amount: 3,
-						grid: grid,
-						from: 'center'
-					}
-				}
-			]
+				]
+			});
+			return () => ctx.revert(); // <- Cleanup!
 		});
 	});
 </script>

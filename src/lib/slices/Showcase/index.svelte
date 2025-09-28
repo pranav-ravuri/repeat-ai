@@ -22,47 +22,50 @@
 	const { slice }: Props = $props();
 
 	onMount(() => {
-		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
+		const ctx = gsap.context(() => {
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
 
-		if (prefersReducedMotion) return;
+			if (prefersReducedMotion) return;
 
-		gsap.registerPlugin(ScrollTrigger);
+			gsap.registerPlugin(ScrollTrigger);
 
-		gsap.fromTo(
-			'.showcase__heading',
-			{
-				y: 100
-			},
-			{
-				y: 0,
-				ease: 'power2.inOut',
-				duration: 1,
-				scrollTrigger: {
-					trigger: '.showcase__heading',
-					start: 'top bottom-=40%',
-					toggleActions: 'play pause resume reverse'
+			gsap.fromTo(
+				'.showcase__heading',
+				{
+					y: 100
+				},
+				{
+					y: 0,
+					ease: 'power2.inOut',
+					duration: 1,
+					scrollTrigger: {
+						trigger: '.showcase__heading',
+						start: 'top bottom-=40%',
+						toggleActions: 'play pause resume reverse'
+					}
 				}
-			}
-		);
+			);
 
-		gsap.fromTo(
-			'.showcase__glow',
-			{
-				scale: 0.7,
-				opacity: 0.1
-			},
-			{
-				scale: 1,
-				opacity: 0.35,
-				ease: 'power2.inOut',
-				duration: 1,
-				scrollTrigger: {
-					trigger: '.showcase__glow',
-					start: 'top bottom-=40%',
-					toggleActions: 'play pause resume reverse'
+			gsap.fromTo(
+				'.showcase__glow',
+				{
+					scale: 0.7,
+					opacity: 0.1
+				},
+				{
+					scale: 1,
+					opacity: 0.35,
+					ease: 'power2.inOut',
+					duration: 1,
+					scrollTrigger: {
+						trigger: '.showcase__glow',
+						start: 'top bottom-=40%',
+						toggleActions: 'play pause resume reverse'
+					}
 				}
-			}
-		);
+			);
+			return () => ctx.revert(); // <- Cleanup!
+		});
 	});
 
 	const icons = {

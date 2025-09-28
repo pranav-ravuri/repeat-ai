@@ -11,22 +11,25 @@
 	const { data }: PageProps = $props();
 
 	onMount(() => {
-		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
-		if (prefersReducedMotion) return;
+		const ctx = gsap.context(() => {
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
+			if (prefersReducedMotion) return;
 
-		gsap.fromTo(
-			'.case-study__image',
-			{
-				opacity: 0,
-				y: 100
-			},
-			{
-				opacity: 1,
-				y: 0,
-				ease: 'power2.inOut',
-				duration: 0.5
-			}
-		);
+			gsap.fromTo(
+				'.case-study__image',
+				{
+					opacity: 0,
+					y: 100
+				},
+				{
+					opacity: 1,
+					y: 0,
+					ease: 'power2.inOut',
+					duration: 0.5
+				}
+			);
+			return () => ctx.revert(); // <- Cleanup!
+		});
 	});
 </script>
 
